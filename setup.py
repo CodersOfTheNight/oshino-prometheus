@@ -20,6 +20,6 @@ setup(name="oshino_prometheus",
       packages=["oshino_prometheus"],
       install_requires=[str(ir.req) for ir in install_reqs],
       test_suite="pytest",
-      tests_require=["pytest", "pytest-cov", "prometheus_client"],
+      tests_require=["pytest", "pytest-cov", "pytest-asyncio", "prometheus_client"],
       setup_requires=["pytest-runner"]
       )

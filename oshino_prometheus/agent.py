@@ -2,11 +2,12 @@ import aiohttp
 
 from oshino import Agent
 
-from oshino_prometheus.utils import parse_prometheus_metrics
+from oshino_prometheus.util import parse_prometheus_metrics
 
 
 class PrometheusAgent(Agent):
 
+    @property
     def endpoints(self):
         return self._data["endpoints"]
 
@@ -18,11 +19,11 @@ class PrometheusAgent(Agent):
     async def process(self, event_fn):
         logger = self.get_logger()
 
-        for endpoint in endpoints:
+        for endpoint in self.endpoints:
             raw = await self.get_raw_metrics(endpoint)
             metrics = parse_prometheus_metrics(raw)
 
-            for key, metric in metrics.items():
+            for key, metric in metrics:
                 logger.debug("Received metric: {0}".format(metric))
                 val, meta = metric
                 service = self.prefix + key.replace("_", ".")
