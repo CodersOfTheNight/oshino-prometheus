@@ -25,7 +25,7 @@ class PrometheusAgent(Agent):
             for key, metric in metrics.items():
                 logger.debug("Received metric: {0}".format(metric))
                 val, meta = metric
-                service = self.prefix + key
+                service = self.prefix + key.replace("_", ".")
                 event_fn(metric_f=val,
                          state="ok",
                          service=service,
